@@ -1,4 +1,5 @@
-# Real-Time Speech Enhancement under Babble Noise Using Wiener Filtering
+# <span style="color:#E53935;">Real-Time Speech Enhancement under Babble Noise Using Wiener Filtering</span>
+
 
 **Author:** Jiahao Xu  
 **SID:** 530332675  
@@ -11,6 +12,7 @@
 This project focuses on developing a lightweight and reproducible baseline for real-time speech enhancement under babble noise, which is one of the most challenging non-stationary noise conditions.
 A classical Short-Time Fourier Transform (STFT)-based Wiener filtering approach is implemented and evaluated at multiple input signal-to-noise ratios (SNRs).
 The aim is to establish an early functional pipeline that generates measurable objective improvements in intelligibility and quality while maintaining a low computational cost suitable for real-time processing.
+
 ---
 
 ## Background and Motivation
@@ -53,6 +55,7 @@ Demonstrated objective gains of +2–3 dB in SI-SDR and +2–4 dB in Segmental S
 A GitHub project site hosting code, results, and demo audio samples for feedback and further extension.
 
 Insights highlighting the limitations of classical Wiener filtering in non-stationary, speech-like noise—motivating future work on decision-directed estimators or causal CRN-lite networks.
+
 ---
 
 ## Timeline (Weeks 6–13)
