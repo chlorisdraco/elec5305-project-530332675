@@ -1,11 +1,25 @@
 # <span style="color:#E53935;">Real-Time Speech Enhancement under Babble Noise Using Wiener Filtering</span>
 
-
 **Author:** Jiahao Xu  
 **SID:** 530332675  
 **Date:** 06/09/2025  
 
 ---
+
+## Branch Structure Explanation
+This repository is organized into two main branches to clearly separate source code and documentation:
+
+Main Branch
+Contains the project proposal, progress report, and overall documentation.
+Serves as the public-facing summary of the project, including objectives, background, results, and future work.
+Suitable for quick review without the need to run any code.
+
+Code Branch
+Contains all Python source code, data files, and generated results (.wav, .json).
+Main script: babble_demo.py
+ — runs the full pipeline for speech enhancement under babble noise.
+All files in this branch are runnable and reproducible.
+Output files will be saved in the results/ directory.
 
 ## Project Overview
 
