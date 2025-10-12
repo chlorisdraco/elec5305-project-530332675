@@ -6,22 +6,22 @@
 
 ---
 
-## Branch Structure Explanation
+## <span style="color:#1565C0;">Branch Structure Explanation</span>
 This repository is organized into two main branches to clearly separate source code and documentation:
 
-Main Branch
+**Main Branch**
 Contains the project proposal, progress report, and overall documentation.
 Serves as the public-facing summary of the project, including objectives, background, results, and future work.
 Suitable for quick review without the need to run any code.
 
-Code Branch
+**Code Branch**
 Contains all Python source code, data files, and generated results (.wav, .json).
 Main script: babble_demo.py
  — runs the full pipeline for speech enhancement under babble noise.
 All files in this branch are runnable and reproducible.
 Output files will be saved in the results/ directory.
 
-## Project Overview
+## <span style="color:#1976D2;">Project Overview</span>
 
 This project focuses on developing a lightweight and reproducible baseline for real-time speech enhancement under babble noise, which is one of the most challenging non-stationary noise conditions.
 A classical Short-Time Fourier Transform (STFT)-based Wiener filtering approach is implemented and evaluated at multiple input signal-to-noise ratios (SNRs).
@@ -29,7 +29,7 @@ The aim is to establish an early functional pipeline that generates measurable o
 
 ---
 
-## Background and Motivation
+## <span style="color:#2E7D32;">Background and Motivation</span>
 
 Speech enhancement plays a vital role in applications such as online meetings, hearing aids, and mobile communication, where speech quality and intelligibility are often degraded by environmental noise.
 Among various noise types, babble noise—caused by overlapping speech from multiple speakers—is particularly difficult to handle because it shares similar spectral and temporal features with the target voice.
@@ -38,7 +38,7 @@ Therefore, this work aims to (i) construct a clear baseline using Wiener filteri
 
 ---
 
-## Proposed Methodology
+## <span style="color:#388E3C;">Proposed Methodology</span>
 
 Synthetic Data Generation
 Clean speech-like and babble noise signals are procedurally generated to simulate controlled multi-talker environments at 0 dB, 5 dB, and 10 dB SNRs.
@@ -60,7 +60,7 @@ The system is implemented in pure Python using numpy, scipy, and soundfile, ensu
 
 ---
 
-## Method Implementation
+## <span style="color:#E65100;">Method Implementation</span>
 
 The system was implemented entirely in Python 3 using open-source libraries (`numpy`, `scipy`, `soundfile`).  
 A modular structure was designed with four core scripts:
@@ -73,7 +73,7 @@ A modular structure was designed with four core scripts:
 Each stage runs automatically and saves intermediate `.wav` files in the `results/` folder.  
 The total runtime for 6 s of audio is below real time (< 6 s on a typical laptop CPU).
 
-## Expected Outcomes
+## <span style="color:#F57C00;">Expected Outcomes</span>
 
 A verified baseline pipeline capable of enhancing speech under babble noise with measurable improvements.
 
@@ -85,7 +85,7 @@ Insights highlighting the limitations of classical Wiener filtering in non-stati
 
 ---
 
-## Timeline (Weeks 6–13)
+## <span style="color:#1565C0;">Timeline (Weeks 6–13)</span>
 
 | Weeks  | Tasks                                   |
 |--------|-----------------------------------------|
@@ -96,7 +96,7 @@ Insights highlighting the limitations of classical Wiener filtering in non-stati
 
 ---
 
-## Results and Discussion
+## <span style="color:#0D47A1;">Results and Discussion</span>
 
 | SNR (dB) | Method Type | SI-SDR (dB) | ΔSI-SDR | SegSNR (dB) | ΔSegSNR |
 |-----------|-------------|-------------|--------:|-------------|--------:|
@@ -113,7 +113,7 @@ Insights highlighting the limitations of classical Wiener filtering in non-stati
 The reference-based Wiener filter consistently improves both SI-SDR and Segmental SNR by 2–4 dB across all SNR levels.  
 In contrast, the minimum-statistics version shows limited or negative gains under babble noise, confirming that traditional noise-tracking struggles with highly non-stationary, speech-like interference.
 
-## References
+## <span style="color:#455A64;">References</span>
 1.Loizou, P. C. (2013). Speech Enhancement: Theory and Practice. CRC Press.
 
 2.Reddy, C. K. et al. (2021). “DNS Challenge: Improving Noise Suppression Models.” Proc. Interspeech.
