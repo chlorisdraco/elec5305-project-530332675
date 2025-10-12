@@ -1,0 +1,50 @@
+{
+  "SNR0dB": {
+    "SI_SDR_noisy": -0.00132944795768708,
+    "SI_SDR_enh_ref": 2.3742706775665283,
+    "SI_SDR_enh_ms": -0.05472720414400101,
+    "SegSNR_noisy": 0.033877208828926086,
+    "SegSNR_enh_ref": 3.993708610534668,
+    "SegSNR_enh_ms": 0.04769998788833618,
+    "SI_SDR_impr_ref": 2.3756001255242154,
+    "SI_SDR_impr_ms": -0.05339775618631393,
+    "SegSNR_impr_ref": 3.959831401705742,
+    "SegSNR_impr_ms": 0.013822779059410095,
+    "ref_PESQ_wb": null,
+    "ref_STOI": null,
+    "ms_PESQ_wb": null,
+    "ms_STOI": null
+  },
+  "SNR5dB": {
+    "SI_SDR_noisy": 4.999258041381836,
+    "SI_SDR_enh_ref": 7.524674415588379,
+    "SI_SDR_enh_ms": 4.899096965789795,
+    "SegSNR_noisy": 5.033873558044434,
+    "SegSNR_enh_ref": 8.198516845703125,
+    "SegSNR_enh_ms": 5.035318374633789,
+    "SI_SDR_impr_ref": 2.525416374206543,
+    "SI_SDR_impr_ms": -0.10016107559204102,
+    "SegSNR_impr_ref": 3.1646432876586914,
+    "SegSNR_impr_ms": 0.0014448165893554688,
+    "ref_PESQ_wb": null,
+    "ref_STOI": null,
+    "ms_PESQ_wb": null,
+    "ms_STOI": null
+  },
+  "SNR10dB": {
+    "SI_SDR_noisy": 9.99958610534668,
+    "SI_SDR_enh_ref": 12.205663681030273,
+    "SI_SDR_enh_ms": 9.846834182739258,
+    "SegSNR_noisy": 10.033860206604004,
+    "SegSNR_enh_ref": 12.50635814666748,
+    "SegSNR_enh_ms": 10.012616157531738,
+    "SI_SDR_impr_ref": 2.2060775756835938,
+    "SI_SDR_impr_ms": -0.15275192260742188,
+    "SegSNR_impr_ref": 2.4724979400634766,
+    "SegSNR_impr_ms": -0.021244049072265625,
+    "ref_PESQ_wb": null,
+    "ref_STOI": null,
+    "ms_PESQ_wb": null,
+    "ms_STOI": null
+  }
+}
