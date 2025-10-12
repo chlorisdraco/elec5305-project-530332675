@@ -1,4 +1,4 @@
-# <span style="color:#E53935;">Real-Time Speech Enhancement under Babble Noise Using Wiener Filtering</span>
+# <span style="color:#FF6F00;">Real-Time Speech Enhancement under Babble Noise Using Wiener Filtering</span>
 
 **Author:** Jiahao Xu  
 **SID:** 530332675  
