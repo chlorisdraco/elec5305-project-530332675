@@ -46,6 +46,19 @@ The system is implemented in pure Python using numpy, scipy, and soundfile, ensu
 
 ---
 
+## Method Implementation
+
+The system was implemented entirely in Python 3 using open-source libraries (`numpy`, `scipy`, `soundfile`).  
+A modular structure was designed with four core scripts:
+
+1. **`mix_babble.py`** – Generates mixtures of clean and babble noise at predefined SNRs (0 / 5 / 10 dB).  
+2. **`baseline_wiener.py`** – Performs STFT-domain Wiener filtering. Supports both reference-based and min-stat noise estimation.  
+3. **`eval_metrics.py`** – Computes SI-SDR and Segmental SNR, with optional PESQ/STOI if installed.  
+4. **`run_demo.py` / `babble_demo.py`** – End-to-end driver script that synthesizes toy data, performs enhancement, and logs results.
+
+Each stage runs automatically and saves intermediate `.wav` files in the `results/` folder.  
+The total runtime for 6 s of audio is below real time (< 6 s on a typical laptop CPU).
+
 ## Expected Outcomes
 
 A verified baseline pipeline capable of enhancing speech under babble noise with measurable improvements.
@@ -67,8 +80,24 @@ Insights highlighting the limitations of classical Wiener filtering in non-stati
 | 10–11  | Improve model and run evaluation        |
 | 12–13  | Write report, prepare GitHub and demos  |
 
-
 ---
+
+## Results and Discussion
+
+| SNR (dB) | Method Type | SI-SDR (dB) | ΔSI-SDR | SegSNR (dB) | ΔSegSNR |
+|-----------|-------------|-------------|--------:|-------------|--------:|
+| 0 dB | Noisy | −0.00 | – | 0.03 | – |
+| | Wiener-ref | 2.37 | **+2.38** | 3.99 | **+3.96** |
+| | Wiener-ms | −0.05 | −0.05 | 0.05 | +0.01 |
+| 5 dB | Noisy | 5.00 | – | 5.03 | – |
+| | Wiener-ref | 7.52 | **+2.53** | 8.20 | **+3.16** |
+| | Wiener-ms | 4.90 | −0.10 | 5.04 | +0.00 |
+| 10 dB | Noisy | 10.00 | – | 10.03 | – |
+| | Wiener-ref | 12.21 | **+2.21** | 12.51 | **+2.47** |
+| | Wiener-ms | 9.85 | −0.15 | 10.01 | −0.02 |
+
+The reference-based Wiener filter consistently improves both SI-SDR and Segmental SNR by 2–4 dB across all SNR levels.  
+In contrast, the minimum-statistics version shows limited or negative gains under babble noise, confirming that traditional noise-tracking struggles with highly non-stationary, speech-like interference.
 
 ## References
 1.Loizou, P. C. (2013). Speech Enhancement: Theory and Practice. CRC Press.
