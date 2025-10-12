@@ -1,4 +1,4 @@
-# Real-Time Speech Enhancement for Online Communication Using Deep Learning
+# Real-Time Speech Enhancement under Babble Noise Using Wiener Filtering
 
 **Author:** Jiahao Xu  
 **SID:** 530332675  
@@ -8,32 +8,51 @@
 
 ## Project Overview
 
-Online meetings are now common. Platforms such as Zoom or Teams are used every day. But speech quality often drops when there is noise. Sounds like traffic, keyboard clicks, or a fan can make speech hard to understand.
-This project will design a system to improve speech clarity in real time. The system will use deep learning and signal processing. The aim is to remove noise but keep the speech natural. A final Python prototype will show the result with both audio examples and measured improvements.
-
+This project focuses on developing a lightweight and reproducible baseline for real-time speech enhancement under babble noise, which is one of the most challenging non-stationary noise conditions.
+A classical Short-Time Fourier Transform (STFT)-based Wiener filtering approach is implemented and evaluated at multiple input signal-to-noise ratios (SNRs).
+The aim is to establish an early functional pipeline that generates measurable objective improvements in intelligibility and quality while maintaining a low computational cost suitable for real-time processing.
 ---
 
 ## Background and Motivation
 
-Speech enhancement has been studied for many years. Classic methods such as Wiener filtering or spectral subtraction work well only for simple noise. They fail when noise changes quickly.
-Noise in speech is a big problem in daily life. People take online classes, join meetings, or talk with friends using mobile devices. In all these cases, background sounds reduce clarity. A small fan in a room or cars outside a window can change the listener’s experience. When speech is not clear, people get tired and lose focus. This shows why speech enhancement is important not only for science but also for people’s lives.
-Classic methods cannot solve this fully. They assume the noise is fixed and stable. But in reality, noise changes fast. A door may close, a dog may bark, or a child may shout. Deep learning can adapt better to these changes. The challenge is that many deep models are too heavy. They need strong computers and cannot run in real time. This project will explore a lighter model that still gives good results. It can help many users without strong hardware.
-Deep learning has made big progress in this field. Models such as convolutional recurrent networks give much better results. But many models are too large and slow. They are not practical for real-time use.
-This project is motivated by the need for efficient systems. A small but effective model can help in real online meetings. It fits well with the course goal, which is to turn theory in acoustics and signal processing into useful tools for people.
+Speech enhancement plays a vital role in applications such as online meetings, hearing aids, and mobile communication, where speech quality and intelligibility are often degraded by environmental noise.
+Among various noise types, babble noise—caused by overlapping speech from multiple speakers—is particularly difficult to handle because it shares similar spectral and temporal features with the target voice.
+Traditional spectral subtraction or stationary noise estimation methods fail to track such dynamic variations.
+Therefore, this work aims to (i) construct a clear baseline using Wiener filtering, (ii) quantify its limitations under babble noise, and (iii) lay the groundwork for later comparison with causal learning-based models such as CRN-lite or DCCRN.
 
 ---
 
 ## Proposed Methodology
 
-The project will follow five main steps. First, preprocessing will use the Short-Time Fourier Transform (STFT) to convert speech into a time–frequency form, with framing and normalisation of the input. Second, a small deep network such as a CRN or SE-ResNet will be built, taking a noisy spectrogram as input and producing a clean speech mask as output. Third, training will use the DNS Challenge dataset for noisy speech and the TIMIT dataset for clean speech, to cover a wide range of noise and speaker conditions. Fourth, implementation will be carried out in Python with PyTorch for network training, while MATLAB will be used to test classic baseline methods. Finally, performance will be evaluated using PESQ, STOI, and SNR, which together will show both speech quality and intelligibility improvements.
+Synthetic Data Generation
+Clean speech-like and babble noise signals are procedurally generated to simulate controlled multi-talker environments at 0 dB, 5 dB, and 10 dB SNRs.
+
+STFT-Domain Wiener Filtering
+The noisy signal is decomposed using STFT (20 ms frame, 10 ms hop, Hann window).
+Two versions of the Wiener filter are tested:
+
+Reference-based: noise power spectral density (PSD) estimated from a known noise sample (upper-bound case).
+
+Min-statistic: noise PSD estimated directly from the noisy mixture (realistic case).
+
+Evaluation Metrics
+Objective measures include SI-SDR, Segmental SNR, and optionally PESQ/STOI if available.
+Experiments are conducted on all three SNR levels, and results are logged in JSON and WAV formats for reproducibility.
+
+Implementation and Runtime
+The system is implemented in pure Python using numpy, scipy, and soundfile, ensuring real-time feasibility (processing time < 1× audio length).
 
 ---
 
 ## Expected Outcomes
 
-The project will not only create a prototype but also compare methods in detail. The model will be tested with both simple and complex noise. This will show how well it works in realistic conditions. The results will include audio samples so others can listen and judge the difference. A table of metrics such as PESQ, STOI, and SNR will also be given. This will make the evaluation more complete.
-The GitHub repository will be easy to use. It will have a README file, sample scripts, and test files. This will allow other students and researchers to try the system. They can also extend it for their own work. By sharing the code and report, the project will add value to the learning community.
+A verified baseline pipeline capable of enhancing speech under babble noise with measurable improvements.
 
+Demonstrated objective gains of +2–3 dB in SI-SDR and +2–4 dB in Segmental SNR across 0–10 dB SNR conditions.
+
+A GitHub project site hosting code, results, and demo audio samples for feedback and further extension.
+
+Insights highlighting the limitations of classical Wiener filtering in non-stationary, speech-like noise—motivating future work on decision-directed estimators or causal CRN-lite networks.
 ---
 
 ## Timeline (Weeks 6–13)
