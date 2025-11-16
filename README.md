@@ -1,4 +1,4 @@
-# <span style="color:#FF6F00;">Real-Time Speech Enhancement under Babble Noise Using Wiener Filtering</span>
+# <span style="color:#FF6F00;">Real-Time Speech Enhancement under Babble Noise Using Wiener Filtering and Spectral Subtraction</span>
 
 **Author:** Jiahao Xu  
 **SID:** 530332675  
@@ -7,81 +7,116 @@
 ---
 
 ## <span style="color:#1565C0;">Branch Structure Explanation</span>
-This repository is organized into two main branches to clearly separate source code and documentation:
 
-**Main Branch**
-Contains the project proposal, progress report, and overall documentation.
-Serves as the public-facing summary of the project, including objectives, background, results, and future work.
-Suitable for quick review without the need to run any code.
+This repository is organised into two main branches to clearly separate source code and documentation.
 
-**Code Branch**
-Contains all Python source code, data files, and generated results (.wav, .json).
-Main script: babble_demo.py
- — runs the full pipeline for speech enhancement under babble noise.
-All files in this branch are runnable and reproducible.
-Output files will be saved in the results/ directory.
+### **Main Branch**
+Contains the project proposal, progress report, and high-level documentation.  
+Provides a summary of project objectives, background, results, and future work.  
+Suitable for quick academic review without running code.
+
+### **Code Branch**
+Contains all Python source code, synthetic data generation scripts, and generated results (`.wav`, `.json`).  
+Main script: **`babble_demo.py`**, which runs the entire experiment pipeline.  
+All files in this branch are runnable and reproducible.  
+Outputs are saved in the `results/` directory.
+
+---
 
 ## <span style="color:#1976D2;">Project Overview</span>
 
-This project focuses on developing a lightweight and reproducible baseline for real-time speech enhancement under babble noise, which is one of the most challenging non-stationary noise conditions.
-A classical Short-Time Fourier Transform (STFT)-based Wiener filtering approach is implemented and evaluated at multiple input signal-to-noise ratios (SNRs).
-The aim is to establish an early functional pipeline that generates measurable objective improvements in intelligibility and quality while maintaining a low computational cost suitable for real-time processing.
+This project builds a simple and reproducible baseline for real-time speech enhancement under babble noise.  
+Babble noise is difficult because it changes quickly and resembles real speech.  
+Three classical STFT-based enhancement methods are implemented:
+
+1. **Wiener filtering (reference noise PSD)**  
+2. **Wiener filtering (minimum-statistics)**  
+3. **Spectral Subtraction (minimum-statistics)**  
+
+All methods are tested at **0 dB, 5 dB, and 10 dB SNR**.  
+The goal is to measure how these traditional filters perform and to identify their limitations.  
+This baseline also prepares the system for later comparison with causal neural models.
 
 ---
 
 ## <span style="color:#2E7D32;">Background and Motivation</span>
 
-Speech enhancement plays a vital role in applications such as online meetings, hearing aids, and mobile communication, where speech quality and intelligibility are often degraded by environmental noise.
-Among various noise types, babble noise—caused by overlapping speech from multiple speakers—is particularly difficult to handle because it shares similar spectral and temporal features with the target voice.
-Traditional spectral subtraction or stationary noise estimation methods fail to track such dynamic variations.
-Therefore, this work aims to (i) construct a clear baseline using Wiener filtering, (ii) quantify its limitations under babble noise, and (iii) lay the groundwork for later comparison with causal learning-based models such as CRN-lite or DCCRN.
+Speech enhancement is important in daily applications such as online meetings, hearing aids, and mobile communication.  
+However, babble noise — created by many overlapping speakers — is hard to remove because it shares similar frequency and timing patterns with the target voice.
+
+Traditional spectral subtraction and minimum-statistics methods assume the noise is stable.  
+This assumption often fails for babble noise.  
+Therefore, this project aims to:
+
+- Build a clean and transparent baseline using classical filters  
+- Evaluate the stability and limits of these methods  
+- Support later development of more adaptive or learning-based approaches  
+
+---
+
+## <span style="color:#2E7D32;">Research Question</span>
+
+**Which classical baseline method performs better under babble noise: Wiener filtering or Spectral Subtraction?**
+
+This question guides the evaluation and helps highlight the weaknesses of traditional noise estimation.
 
 ---
 
 ## <span style="color:#388E3C;">Proposed Methodology</span>
 
-Synthetic Data Generation
-Clean speech-like and babble noise signals are procedurally generated to simulate controlled multi-talker environments at 0 dB, 5 dB, and 10 dB SNRs.
+### **Synthetic Data Generation**
+Speech-like signals and babble noise are synthetically generated.  
+Mixtures are created at **0 dB, 5 dB, and 10 dB SNR**.
 
-STFT-Domain Wiener Filtering
-The noisy signal is decomposed using STFT (20 ms frame, 10 ms hop, Hann window).
-Two versions of the Wiener filter are tested:
+### **STFT-Domain Enhancement Methods**
+Three baseline methods are evaluated:
 
-Reference-based: noise power spectral density (PSD) estimated from a known noise sample (upper-bound case).
+**1. Wiener Filtering (Reference PSD)**  
+Noise PSD is computed from a clean noise sample.  
+This represents an upper-bound for classical algorithms.
 
-Min-statistic: noise PSD estimated directly from the noisy mixture (realistic case).
+**2. Wiener Filtering (Minimum-Statistics)**  
+Noise PSD is estimated directly from the mixture using frequency-wise minima.  
+This method is simple but unstable in non-stationary noise.
 
-Evaluation Metrics
-Objective measures include SI-SDR, Segmental SNR, and optionally PESQ/STOI if available.
-Experiments are conducted on all three SNR levels, and results are logged in JSON and WAV formats for reproducibility.
+**3. Spectral Subtraction (Minimum-Statistics)**  
+Subtracts an estimated noise spectrum from the noisy signal.  
+This method is commonly used as a classical baseline.
 
-Implementation and Runtime
-The system is implemented in pure Python using numpy, scipy, and soundfile, ensuring real-time feasibility (processing time < 1× audio length).
+### **Evaluation Metrics**
+- SI-SDR  
+- Segmental SNR  
+- Optional: PESQ and STOI  
+
+All results are saved in `.wav` and `.json` formats.
+
+### **Implementation and Runtime**
+The system is implemented using Python (`numpy`, `scipy`, and `soundfile`).  
+Processing time for 6 s audio is below real time.
 
 ---
 
 ## <span style="color:#E65100;">Method Implementation</span>
 
-The system was implemented entirely in Python 3 using open-source libraries (`numpy`, `scipy`, `soundfile`).  
-A modular structure was designed with four core scripts:
+Four main scripts are included:
 
-1. **`mix_babble.py`** – Generates mixtures of clean and babble noise at predefined SNRs (0 / 5 / 10 dB).  
-2. **`baseline_wiener.py`** – Performs STFT-domain Wiener filtering. Supports both reference-based and min-stat noise estimation.  
-3. **`eval_metrics.py`** – Computes SI-SDR and Segmental SNR, with optional PESQ/STOI if installed.  
-4. **`run_demo.py` / `babble_demo.py`** – End-to-end driver script that synthesizes toy data, performs enhancement, and logs results.
+1. **`mix_babble.py`** – Generates clean + babble mixtures.  
+2. **`baseline_wiener.py`** – Implements reference and min-stat Wiener filtering.  
+3. **`baseline_spectral_subtraction.py`** – Implements magnitude spectral subtraction.  
+4. **`babble_demo.py`** – Runs the full pipeline and logs metrics.
 
-Each stage runs automatically and saves intermediate `.wav` files in the `results/` folder.  
-The total runtime for 6 s of audio is below real time (< 6 s on a typical laptop CPU).
+Intermediate `.wav` files are stored in the `results/` folder.  
+All components run automatically.
+
+---
 
 ## <span style="color:#F57C00;">Expected Outcomes</span>
 
-A verified baseline pipeline capable of enhancing speech under babble noise with measurable improvements.
-
-Demonstrated objective gains of +2–3 dB in SI-SDR and +2–4 dB in Segmental SNR across 0–10 dB SNR conditions.
-
-A GitHub project site hosting code, results, and demo audio samples for feedback and further extension.
-
-Insights highlighting the limitations of classical Wiener filtering in non-stationary, speech-like noise—motivating future work on decision-directed estimators or causal CRN-lite networks.
+- A verified classical baseline for babble-noise speech enhancement.  
+- Objective improvements of **+2–4 dB** using reference Wiener filtering.  
+- A GitHub project with reproducible code and audio demos.  
+- Insights into why traditional methods struggle with fast-changing, speech-like noise.  
+- A foundation for future models such as decision-directed Wiener filtering or causal CRN-lite.
 
 ---
 
@@ -98,26 +133,43 @@ Insights highlighting the limitations of classical Wiener filtering in non-stati
 
 ## <span style="color:#0D47A1;">Results and Discussion</span>
 
+### **Results**
+
 | SNR (dB) | Method Type | SI-SDR (dB) | ΔSI-SDR | SegSNR (dB) | ΔSegSNR |
 |-----------|-------------|-------------|--------:|-------------|--------:|
 | 0 dB | Noisy | −0.00 | – | 0.03 | – |
 | | Wiener-ref | 2.37 | **+2.38** | 3.99 | **+3.96** |
 | | Wiener-ms | −0.05 | −0.05 | 0.05 | +0.01 |
+| | Spectral Subtraction | −0.03 | −0.03 | 0.04 | +0.01 |
 | 5 dB | Noisy | 5.00 | – | 5.03 | – |
 | | Wiener-ref | 7.52 | **+2.53** | 8.20 | **+3.16** |
 | | Wiener-ms | 4.90 | −0.10 | 5.04 | +0.00 |
+| | Spectral Subtraction | 4.95 | −0.05 | 5.04 | +0.00 |
 | 10 dB | Noisy | 10.00 | – | 10.03 | – |
 | | Wiener-ref | 12.21 | **+2.21** | 12.51 | **+2.47** |
 | | Wiener-ms | 9.85 | −0.15 | 10.01 | −0.02 |
+| | Spectral Subtraction | 9.93 | −0.07 | 10.03 | −0.00 |
 
-The reference-based Wiener filter consistently improves both SI-SDR and Segmental SNR by 2–4 dB across all SNR levels.  
-In contrast, the minimum-statistics version shows limited or negative gains under babble noise, confirming that traditional noise-tracking struggles with highly non-stationary, speech-like interference.
+### **Discussion**
+
+The reference Wiener filter delivered the strongest improvements across all SNR levels.  
+Because it has access to clean noise PSD, it produces stable gain estimates and reduces distortion.
+
+The minimum-statistics Wiener filter and Spectral Subtraction both struggled.  
+Babble noise changes quickly, and minimum-statistics noise estimates become unstable.  
+As a result, both methods provide very limited gains and may even reduce SI-SDR.  
+Spectral Subtraction performs slightly better than Wiener-ms, but still does not improve SI-SDR in most cases.
+
+These results show that classical non-adaptive enhancement methods face clear limitations in speech-like noise.  
+More adaptive or learning-based approaches are likely to perform better.
+
+---
 
 ## <span style="color:#455A64;">References</span>
-1.Loizou, P. C. (2013). Speech Enhancement: Theory and Practice. CRC Press.
 
-2.Reddy, C. K. et al. (2021). “DNS Challenge: Improving Noise Suppression Models.” Proc. Interspeech.
+1. Loizou, P. C. (2013). *Speech Enhancement: Theory and Practice*. CRC Press.  
+2. Reddy, C. K. et al. (2021). “DNS Challenge: Improving Noise Suppression Models.” *Proc. Interspeech*.  
+3. Ephraim, Y., & Malah, D. (1984). “Speech enhancement using a minimum mean-square error short-time spectral amplitude estimator.” *IEEE TASSP*.  
+4. Boll, S. (1979). “Suppression of acoustic noise in speech using spectral subtraction.” *IEEE TASSP*.  
 
-3.Ephraim, Y., & Malah, D. (1984). “Speech enhancement using a minimum mean-square error short-time spectral amplitude estimator.” IEEE Trans. Acoustics, Speech, and Signal Processing, 32(6), 1109–1121.
 
-4.Tan, K., & Wang, D. (2019). “Learning Complex Spectral Mapping with a Convolutional Recurrent Network for Speech Enhancement.” IEEE/ACM Trans. Audio, Speech, and Language Processing, 27(12), 1996–2008.
