@@ -9,17 +9,8 @@
 
 This repository is organised into two main files to clearly separate source code and documentation.
 
-### **Code file**
-Contains the project proposal, progress report, and high-level documentation.  
-Provides a summary of project objectives, background, results, and future work.  
-Suitable for quick academic review without running code.
-
-### **Code file**
-Contains all Python source code, synthetic data generation scripts, and generated results (`.wav`, `.json`).  
-Main script: **`babble_demo.py`**, which runs the entire experiment pipeline.  
-All files in this branch are runnable and reproducible.  
 Outputs are saved in the `results/` directory.
-
+code are saved in the `code/` directory.
 ---
 
 ## <span style="color:#1976D2;">Project Overview</span>
