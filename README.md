@@ -98,15 +98,15 @@ Processing time for 6 s audio is below real time.
 
 ## <span style="color:#E65100;">Method Implementation</span>
 
-Four main scripts are included:
+A modular structure was designed with five core scripts:
 
-1. **`mix_babble.py`** – Generates clean + babble mixtures.  
-2. **`baseline_wiener.py`** – Implements reference and min-stat Wiener filtering.  
-3. **`baseline_spectral_subtraction.py`** – Implements magnitude spectral subtraction.  
-4. **`babble_demo.py`** – Runs the full pipeline and logs metrics.
+1. **`synthesis.py`** – Generates clean and babble noise signals.
+2. **`wiener.py`** – Implements Wiener filtering and spectral subtraction.
+3. **`metrics.py`** – Computes SI-SDR and Segmental SNR, with optional PESQ/STOI.
+4. **`config.py`** – Defines global parameters such as FS, DUR, FRAME, and HOP settings.
+5. **`babble_demo.py`** – End-to-end driver script that runs synthesis, enhancement, and evaluation.
 
-Intermediate `.wav` files are stored in the `results/` folder.  
-All components run automatically.
+All intermediate `.wav` and `.json` files are saved in the `results/` folder.
 
 ---
 
